@@ -4,7 +4,7 @@ This folder contains the methods to convert voice tweets into text, and display 
 1) takes a URL as an input
 2) downloads the (voice) file from the URL
 3) converts the audio into text
-4) creates two files: text.txt contains all the text from the audio; lists.txt enumerates the words and their timestamps in the audio.
+4) creates the text.txt, which contains all the text from the audio.
 
 - display_text_button.py: displays the voice's text when a user hits the 'text display' button
 
