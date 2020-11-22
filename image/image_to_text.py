@@ -180,6 +180,6 @@ class Img2txt:
 
 i2t = Img2txt()
 
-def predict(url):
+def img2txt_predict(url):
     return i2t.predict(url)
 
