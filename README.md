@@ -30,7 +30,7 @@ Our project has the following features:
 
 
 
-# Developers- 
+# Developers
 1. Namrata Agrawal
 2. Freya Mehta
 3. Khushal Chekuri
