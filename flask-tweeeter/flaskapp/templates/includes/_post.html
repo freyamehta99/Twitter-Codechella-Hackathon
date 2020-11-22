@@ -1,0 +1,173 @@
+{% set id = post.id %}
+<a href="/post/{{post.id}}" class="has-text-dark">
+    <div class="box" id="{{id}}">
+        <article class="media">
+            <figure class="media-left">
+                <p class="image is-64x64">
+                    {% set profile_pic = url_for('static', filename='profile_pics/' + post.author.image_file) %}
+                    <img src="{{ profile_pic }}" style="width: 64px; height: 64px;" class="profile">
+                </p>
+            </figure>
+            <div class="media-content">
+                <div class="content">
+                    <p style="margin-bottom: .8rem;">
+                        <strong class="has-text-info">@{{post.author.username}}{% if post.author.verified %}
+                            &nbsp;<i class="fas fa-check-circle"></i>
+                            {% endif %}</strong>
+                        <small
+                            class="has-text-weight-semibold">&nbsp;&nbsp;{{post.date_posted.strftime('%B %d, %Y')}}</small>
+                        <br>
+                        <p style="margin-bottom: .8rem;">{{post.content}}</p>
+
+                        <!-- <p style="margin-bottom: .8rem;">{{post.media}}</p> -->
+                        {% if post.media != None  %}
+                        
+                        {% if post.media_format == "image" %}
+                        <img src="{{ url_for('static', filename='profile_pics/' + post.media) }}"
+                                        alt="Post Media {{post.media}}"
+                                        style="margin: auto 1rem auto 0;">
+                        {% endif %}
+
+                        {% if post.media_format == "video" %}
+                        <video src="{{ url_for('static', filename='profile_pics/' + post.media) }}"
+                                        alt="Post Media {{post.media}}" type="video/mp4" controls
+                                        style="margin: auto 1rem auto 0;"></video>
+                        {% endif %}
+
+                        {% endif %}
+
+                        <!-- retweet logic -->
+                        {% if post.retweet != None  %}
+                        {% set retweet = Post_model.query.filter_by(id=post.retweet).first() %}
+                        <!-- retweet box -->
+
+                        <div class="box" style="padding: 0.75rem 1.5rem;">
+                            <a href="/post/{{retweet.id}}" class="has-text-dark">
+                                <div class="content is-small">
+
+
+                                    <img src="{{ url_for('static', filename='profile_pics/' + retweet.author.image_file) }}"
+                                        alt="Profile Picture" class="profile is-pulled-left" width="45"
+                                        style="margin: auto 1rem auto 0;">
+
+                                    <p>
+                                        <strong
+                                            class="has-text-info">@{{retweet.author.username}}{% if post.author.verified %}
+                                            &nbsp;<i class="fas fa-check-circle"></i>
+                                            {% endif %}</strong>
+                                        <small
+                                            class="has-text-weight-semibold">&nbsp;&nbsp;{{retweet.date_posted.strftime('%B %d, %Y')}}</small>
+                                        <br>
+                                        <p style="margin-bottom: .8rem;">{{retweet.content}}</p>
+                                    </p>
+
+
+
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- retweet box end -->
+                        {% endif %}
+
+
+
+                    </p>
+                </div>
+
+                <div class="level-left">
+
+                    <a class="level-item has-text-weight-semibold" href="/like/{{post.id}}" style="margin-right: 2rem;">
+                        <!--  if username found in session (user is logged in) -->
+                        {% if user != None %}
+                        <!-- if user has liked post make heart red and full -->
+                        {% if user in post.likes.all() %}
+                        <span class="icon is-small has-text-danger"><i
+                                class="fas fa-heart"></i>&nbsp;&nbsp;</span>{{post.likes.all()|length}}
+                        <!-- if user hasnt liked post make heart grey and empty -->
+                        {% else %}
+                        <span class="icon is-small has-text-dark"><i
+                                class="far fa-heart"></i>&nbsp;&nbsp;</span>{{post.likes.all()|length}}
+                        {% endif %}
+                        <!-- if user is not logged in make heart grey and empty -->
+                        {% else %}
+                        <span class="icon is-small has-text-dark"><i
+                                class="far fa-heart"></i>&nbsp;&nbsp;</span>{{post.likes.all()|length}}
+                        {% endif %}
+                    </a>
+
+
+                    {% if post.retweet == None %}
+                    {% set post_retweets = Post_model.query.filter_by(retweet=post.id).all()|length %}
+                    <a class="level-item has-text-weight-semibold" href="/retweet/{{post.id}}"
+                        style="margin-right: 2.5rem;">
+                        <!--  if username found in session (user is logged in) -->
+                        {% if user != None %}
+                        <!-- if user has retweeted post make icon green -->
+                        {% if Post_model.query.filter_by(user_id=user.id).filter_by(retweet=post.id).first() %}
+                        <span class="icon is-small has-text-primary"><i
+                                class="fas fa-retweet"></i>&nbsp;&nbsp;{{post_retweets}}</span>
+                        <!-- if user hasnt retweeted post make icon grey -->
+                        {% else %}
+                        <span class="icon is-small has-text-grey"><i
+                                class="fas fa-retweet"></i>&nbsp;&nbsp;{{post_retweets}}</span>
+                        {% endif %}
+                        <!-- if user is not logged in make icon grey -->
+                        {% else %}
+                        <span class="icon is-small has-text-grey"><i
+                                class="fas fa-retweet"></i>&nbsp;&nbsp;{{post_retweets}}</span>
+                        {% endif %}
+                    </a>
+                    {% endif %}
+
+
+                    {% if post.comment == None %}
+                    {% set post_comments = Post_model.query.filter_by(comment=post.id).all()|length %}
+                    <a class="level-item has-text-weight-semibold" href="/new_comment/{{post.id}}"
+                        style="margin-right: 2rem;">
+                        <!--  if username found in session (user is logged in) -->
+                        {% if user != None %}
+                        <!-- if user has retweeted post make icon green -->
+                        {% if Post_model.query.filter_by(user_id=user.id).filter_by(comment=post.id).first() %}
+                        <span class="icon is-small has-text-primary"><i
+                                class="fas fa-comment"></i>&nbsp;&nbsp;{{post_comments}}</span>
+                        <!-- if user hasnt retweeted post make icon grey -->
+                        {% else %}
+                        <span class="icon is-small has-text-grey"><i
+                                class="far fa-comment"></i>&nbsp;&nbsp;{{post_comments}}</span>
+                        {% endif %}
+                        <!-- if user is not logged in make icon grey -->
+                        {% else %}
+                        <span class="icon is-small has-text-grey"><i
+                                class="far fa-comment"></i>&nbsp;&nbsp;{{post_comments}}</span>
+                        {% endif %}
+                    </a>
+                    {% endif %}
+
+                    {% if post.media != None %}
+
+                            
+                            <!-- <button onclick="myFunction()">Click</button> -->
+                            <span class="icon is-small has-text-primary" id="check"><i
+                                class="fas fa-comment"></i>&nbsp;&nbsp;</span>
+                                <br>
+                            <p id="demo" value="{{post.summary}}">{{post.summary}}</p>
+
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </article>
+    </div>
+</a>
+
+<script>
+document.getElementById("check").addEventListener("click", myFunction);
+
+function myFunction() {
+  document.getElementById("demo").innerHTML = document.getElementById("demo").value;
+
+}
+</script>
