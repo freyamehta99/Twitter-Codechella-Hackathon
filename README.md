@@ -2,6 +2,14 @@
 
 
 # About Project
+Twitter has various accessibility features for people like "alt text," "adjusting the color contrast," "reducing the motion of in-app animations" etc. However, Twitter can do much more to improve the accessibility of people with challenges.
+
+Our project has the following features:
+- For voice tweets, the user can display written transcripts or play the audio in another language. 
+- For videos with voice, the user can display a written summary of the video, and subtitles. 
+- For images, the user can display a written summary of the image. 
+- For text tweet, the user can switch it into a vocal note which reads the original text tweet.
+- All the format conversions are generated automatically whenever a user tweets. This differs from, for instance, the already-existing feature which allows users to write image descriptions "manually" before they tweet an image.
 
 # Built With
 1. Twitter API
