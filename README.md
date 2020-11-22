@@ -1,11 +1,10 @@
 # Twitter-Codechella-Hackathon
 
 
-
-                                   [Devpost](https://devpost.com/software/xyz-69t2vr) 
-                                   [YouTube](https://www.youtube.com/watch?v=LUF9ISxdzns&feature=youtu.be)
-                                   [GitHub Repo](https://github.com/freyamehta99/Twitter-Codechella-Hackathon) 
-                                   [Project Presentation](https://drive.google.com/file/d/1TX-J0k-wd0-glyrxa2Df78Q0kY0yRzOl/view?usp=sharing)
+ [Devpost](https://devpost.com/software/xyz-69t2vr) 
+ [YouTube](https://www.youtube.com/watch?v=LUF9ISxdzns&feature=youtu.be)
+ [GitHub Repo](https://github.com/freyamehta99/Twitter-Codechella-Hackathon) 
+ [Project Presentation](https://drive.google.com/file/d/1TX-J0k-wd0-glyrxa2Df78Q0kY0yRzOl/view?usp=sharing)
 
 
 
